@@ -1,15 +1,15 @@
-FROM golang:1.21.5-bullseye as deploy-builder
+FROM golang:1.21.5-alpine as deploy-builder
 
 WORKDIR /app
 
 COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
-RUN go build -trimpath -ldflags "-w -s" -buildvcs=false . -o app
+RUN go build -buildvcs=false -trimpath  -o app .
 
 FROM debian:bullseye-slim as deploy
 
-RUN apt-get update
+RUN apt-get update && apt install git
 
 COPY --from=deploy-builder /app/app .
 
