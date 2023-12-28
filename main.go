@@ -14,11 +14,14 @@ import (
 // run関数にhttpサーバーの処理を分離,  curl http://localhost:port番号/メッセージ
 func main() {
 	// 引数でポート番号を指定できるように変更
-	if len(os.Args) != 2 {
-		log.Printf("need port number\n")
-		os.Exit(1)
-	}
-	p := os.Args[1]
+	fmt.Println(os.Args)
+	// 引数が読み込まれないのでとりあえず無効化
+	// if len(os.Args) != 2 {
+	// 	log.Printf("need port number\n")
+	// 	os.Exit(1)
+	// }
+	// p := os.Args[1]
+	p := "80"
 	l, err := net.Listen("tcp", ":"+p)
 	if err != nil {
 		log.Fatalf("failed to listen port %s: %v", p, err)
